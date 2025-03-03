@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Kit Store</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 40px;
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+        .hero {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(45deg, #ff4e50, #fc913a, #f9d423, #e1f5c4, #a8e6cf, #ff8c94, #ffaaa5);
+            background-size: 400% 400%;
+            animation: gradientAnimation 8s ease infinite;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .hero h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            border-radius: 10px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        .cta {
+            padding: 15px 30px;
+            border-radius: 10px;
+            background: white;
+            color: #3b82f6;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .cta:hover {
+            transform: scale(1.1);
+            background-color: #e04e2d;
+            color: white;
+        }
+        .store-section {
+            display: none;
+            padding: 40px;
+            text-align: center;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .product {
+            display: inline-block;
+            width: 220px;
+            margin: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .product:hover { transform: scale(1.05); }
+        .product img {
+            width: 100%;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>Football Kit Store</header>
+    <div class="hero">
+        <h2>Welcome to the Ultimate Football Kit Store</h2>
+        <button class="cta" onclick="showStore()">Shop Now</button>
+    </div>
+    <div class="store-section" id="storeSection">
+        <h2>Our Products</h2>
+        <div class="product">
+            <img src="https://store.fcbarcelona.com/cdn/shop/files/imagen_3.jpg" alt="Barcelona Shirt">
+            <h3>Barcelona Home Shirt</h3>
+            <p>R1425.00</p>
+            <button onclick="addToCart('Barcelona Home Shirt', 1425)">Add to Cart</button>
+        </div>
+   <div class="product">
+            <img src="https://thumblr.uniid.it/product/359343/cb381d2c2340.jpg?width=384&format=webp&q=75" alt="Madrid Shirt">
+            <h3>Real Madrid Home Shirt</h3>
+            <p>R1425.00</p>
+            <button onclick="addToCart('Real Madrid Home Shirt', 1425)">Add to Cart</button>
+        </div>
+		
+		<div class="product">
+            <img src="https://thumblr.uniid.it/product/356002/41471e329ded.jpg?width=384&format=webp&q=75" alt="City Shirt">
+            <h3>Man City Home Shirt</h3>
+            <p>R1425.00</p>
+            <button onclick="addToCart('Man City Home Shirt', 1425)">Add to Cart</button>
+        </div>
+		
+		<div class="product">
+            <img src="https://thumblr.uniid.it/product/359339/f5d8ffc31ff5.jpg?width=384&format=webp&q=75" alt="UTD Shirt">
+            <h3>Man UTD Home Shirt</h3>
+            <p>R1425.00</p>
+            <button onclick="addToCart('Man UTD Home Shirt', 1425)">Add to Cart</button>
+        </div>
+		
+		<div class="product">
+            <img src="https://thumblr.uniid.it/product/359305/e98bcd49768c.jpg?width=384&format=webp&q=75" alt="juve Shirt">
+            <h3>Juventus Home Shirt</h3>
+            <p>R1425.00</p>
+            <button onclick="addToCart('Man UTD Home Shirt', 1425)">Add to Cart</button>
+        </div>
+		
+		<div class="product">
+            <img src="https://thumblr.uniid.it/product/355995/5bc381f61b2b.jpg?width=384&format=webp&q=75" alt="AC Milan Shirt">
+            <h3>AC Milan Home Shirt</h3>
+            <p>R1425.00</p>
+            <button onclick="addToCart('AC Milan Home Shirt', 1425)">Add to Cart</button>
+        </div>
+		
+        <button class="cta" onclick="showCheckout()">Go to Checkout</button>
+    </div>
+    <div class="checkout-section" id="checkoutSection">
+        <h2>Checkout</h2>
+        <div class="cart-container" id="cartContainer"></div>
+        <form class="checkout-form" onsubmit="submitOrder(event)">
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Email" required>
+            <input type="text" placeholder="Shipping Address" required>
+            <button type="submit">Place Order</button>
+        </form>
+    </div>
+    <script>
+        let cart = [];
+        function showStore() {
+            document.querySelector('.hero').style.display = 'none';
+            document.getElementById('storeSection').style.display = 'block';
+        }
+        function addToCart(productName, price) {
+            cart.push({ productName, price });
+            alert(productName + " added to cart!");
+        }
+        function showCheckout() {
+            document.getElementById('storeSection').style.display = 'none';
+            document.getElementById('checkoutSection').style.display = 'block';
+            displayCart();
+        }
+        function displayCart() {
+            const cartContainer = document.getElementById('cartContainer');
+            cartContainer.innerHTML = '';
+            cart.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('cart-item');
+                itemElement.innerHTML = `<span>${item.productName}</span> <span>R${item.price}</span>`;
+                cartContainer.appendChild(itemElement);
+            });
+        }
+        function submitOrder(event) {
+            event.preventDefault();
+            alert('Thank you for your order! Your kits will be shipped soon.');
+            cart = [];
+            document.getElementById('checkoutSection').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
